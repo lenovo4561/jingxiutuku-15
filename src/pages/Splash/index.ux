@@ -2,13 +2,13 @@
   <div class="splash-container">
     <!-- Top Background Area -->
     <div class="top-section">
-       <image class="vector-img" src="/assets/img/Vector_66.png"></image>
+       <image class="vector-img" src="/PackageMain/assets/img/Vector_66.png"></image>
     </div>
 
     <!-- Center Logo Area -->
     <div class="center-section">
-      <image class="logo-img" src="/assets/img/logo.png"></image>
-      <image class="text-img" src="/assets/img/jxtk.png"></image>
+      <image class="logo-img" src="/assets/images/logo.png"></image>
+      <image class="text-img" src="/PackageMain/assets/img/jxtk.png"></image>
     </div>
 
     <!-- Privacy Modal -->
@@ -118,7 +118,7 @@ export default {
   },
   navigateToHome() {
     router.replace({
-      uri: '/pages/Main'
+      uri: '/PackageMain/pages/Main'
     })
   }
 }

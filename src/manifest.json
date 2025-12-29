@@ -47,29 +47,35 @@
       "pages/Splash": {
         "component": "index"
       },
-      "pages/Main": {
-        "component": "index"
-      },
       "pages/Web": {
         "component": "index"
       },
-      "pages/Demo": {
+      "PackageMain/pages/Main": {
         "component": "index"
       },
-      "pages/DemoDetail": {
+      "PackageMain/pages/Demo": {
         "component": "index"
       },
-      "pages/Detail": {
+      "PackageMain/pages/DemoDetail": {
         "component": "index"
       },
-      "pages/AvatarDetail": {
+      "PackageMain/pages/Detail": {
         "component": "index"
       },
-      "pages/EmojiDetail": {
+      "PackageMain/pages/AvatarDetail": {
+        "component": "index"
+      },
+      "PackageMain/pages/EmojiDetail": {
         "component": "index"
       }
     }
   },
+  "subpackages": [
+    {
+      "name": "PackageMain",
+      "resource": "PackageMain"
+    }
+  ],
   "display": {
     "titleBarBackgroundColor": "#f2f2f2",
     "titleBarTextColor": "#414141",
@@ -80,31 +86,31 @@
         "menu": false,
         "fullScreen": true
       },
-      "pages/Main": {
+      "PackageMain/pages/Main": {
         "titleBar": false,
         "menu": false
       },
       "pages/Web": {
         "titleBarText": "协议"
       },
-      "pages/Demo": {
+      "PackageMain/pages/Demo": {
         "titleBarText": "快应用示例模版",
         "menu": false
       },
-      "pages/DemoDetail": {
+      "PackageMain/pages/DemoDetail": {
         "titleBarText": "详情页"
       },
-      "pages/Detail": {
+      "PackageMain/pages/Detail": {
         "titleBar": false,
         "fullScreen": true,
         "menu": false
       },
-      "pages/AvatarDetail": {
+      "PackageMain/pages/AvatarDetail": {
         "titleBar": false,
         "fullScreen": true,
         "menu": false
       },
-      "pages/EmojiDetail": {
+      "PackageMain/pages/EmojiDetail": {
         "titleBar": false,
         "fullScreen": true,
         "menu": false
