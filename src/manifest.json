@@ -26,6 +26,9 @@
     },
     {
       "name": "system.device"
+    },
+    {
+      "name": "system.webview"
     }
   ],
   "permissions": [
@@ -45,6 +48,9 @@
         "component": "index"
       },
       "pages/Main": {
+        "component": "index"
+      },
+      "pages/Web": {
         "component": "index"
       },
       "pages/Demo": {
@@ -77,6 +83,9 @@
       "pages/Main": {
         "titleBar": false,
         "menu": false
+      },
+      "pages/Web": {
+        "titleBarText": "协议"
       },
       "pages/Demo": {
         "titleBarText": "快应用示例模版",
