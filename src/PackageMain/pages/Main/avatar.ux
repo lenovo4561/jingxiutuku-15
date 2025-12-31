@@ -3,15 +3,16 @@
     <!-- 顶部Banner -->
     <image class="banner-image" src="/PackageMain/assets/img/touxiang-banner.png"></image>
     
-    <!-- 壁纸列表 -->
-    <div class="content-grid">
-      <block for="{{wallpaperList}}">
-        <div class="grid-item" onclick="goToDetail">
-           <!-- 占位符 -->
-           <div class="placeholder-box"></div> 
+    <!-- 头像列表 -->
+    <list class="content-list">
+      <list-item type="avatar-row" class="content-row" for="{{(rowIndex, row) in avatarRows}}">
+        <div class="grid-item" for="{{(itemIndex, item) in row}}" onclick="goToDetail(item.index)">
+          <image class="avatar-img" src="{{item.url}}"></image>
         </div>
-      </block>
-    </div>
+      </list-item>
+      <!-- 底部垫高，防止被导航栏遮挡 -->
+      <list-item type="footer" class="footer-spacer"></list-item>
+    </list>
   </div>
 </template>
 
@@ -19,16 +20,41 @@
 import router from '@system.router'
 
 export default {
-  data: {
-    // 生成一些占位数据
-    wallpaperList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  data() {
+    // 生成40张头像数据
+    const avatars = []
+    for (let i = 1; i <= 40; i++) {
+      avatars.push({
+        id: i,
+        index: i - 1,
+        url: `https://cdn.shijinzhuang.com/jxtk/tx/${i}.jpg`
+      })
+    }
+    
+    // 转换为两列布局的行数据
+    const rows = []
+    for (let i = 0; i < avatars.length; i += 2) {
+      const row = [avatars[i]]
+      if (i + 1 < avatars.length) {
+        row.push(avatars[i + 1])
+      }
+      rows.push(row)
+    }
+    
+    return {
+      avatarList: avatars,
+      avatarRows: rows
+    }
   },
   onInit() {
     console.log('Avatar page initialized')
   },
-  goToDetail() {
+  goToDetail(index) {
     router.push({
-      uri: '/PackageMain/pages/AvatarDetail'
+      uri: '/PackageMain/pages/AvatarDetail',
+      params: {
+        currentIndex: index
+      }
     })
   }
 }
@@ -38,35 +64,43 @@ export default {
 .page-wrapper {
   flex-direction: column;
   background-color: #ffffff;
-  padding-bottom: 35px; /* 预留底部导航栏空间 */
 }
 
 .banner-image {
   width: 100%;
-  height: 97px; /* 根据图片比例调整 */
+  height: 97px;
   object-fit: cover;
   margin-bottom: 5px;
 }
 
-.content-grid {
-  flex-direction: row;
-  flex-wrap: wrap;
+.content-list {
+  flex: 1;
+  flex-direction: column;
   padding: 0 7px;
+}
+
+.content-row {
+  flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 7px;
 }
 
 .grid-item {
-  width: 115px; /* (250 - 7*2 - 7) / 2 = 115 */
-  height: 115px; /* 正方形 */
-  margin-bottom: 7px;
+  width: 115px;
+  height: 115px;
   border-radius: 5px;
   overflow: hidden;
+  background-color: #f5f5f5;
 }
 
-.placeholder-box {
+.avatar-img {
   width: 100%;
   height: 100%;
-  background-color: #e0e0e0;
+  object-fit: cover;
   border-radius: 5px;
+}
+
+.footer-spacer {
+  height: 50px;
 }
 </style>

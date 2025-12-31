@@ -15,8 +15,8 @@
     <!-- 壁纸列表 (两列布局) -->
     <list class="wallpaper-list">
       <list-item type="wallpaper-row" class="wallpaper-row" for="{{row in wallpaperRows}}">
-         <div class="wallpaper-item" for="{{item in row}}" onclick="goToDetail">
-            <div class="placeholder-img"></div>
+         <div class="wallpaper-item" for="{{item in row}}" onclick="goToDetail(item.url)">
+            <image class="wallpaper-img" src="{{item.url}}"></image>
          </div>
       </list-item>
        <!-- 底部垫高，防止被导航栏遮挡 -->
@@ -32,24 +32,71 @@ export default {
   data: {
     currentCategory: 0,
     categories: ['热门', '动漫', '人物', '萌宠', '自然'],
-    // 模拟数据，每行两个，生成 5 行数据
-    wallpaperRows: [
-      [1, 2],
-      [3, 4],
-      [5, 6],
-      [7, 8],
-      [9, 10]
-    ]
+    // 所有分类的壁纸数据
+    allWallpapers: {
+      '热门': [],
+      '动漫': [],
+      '人物': [],
+      '萌宠': [],
+      '自然': []
+    },
+    // 当前显示的壁纸行数据
+    wallpaperRows: []
   },
   onInit() {
     console.log('Wallpaper page initialized')
+    // 初始化所有分类的壁纸数据
+    this.initWallpapers()
+    // 加载热门分类
+    this.loadWallpapers()
+  },
+  // 初始化所有分类的壁纸数据
+  initWallpapers() {
+    const categories = [
+      { name: '热门', code: 'rm' },
+      { name: '动漫', code: 'dm' },
+      { name: '人物', code: 'rw' },
+      { name: '萌宠', code: 'mc' },
+      { name: '自然', code: 'zr' }
+    ]
+    
+    categories.forEach(category => {
+      const wallpapers = []
+      for (let i = 1; i <= 20; i++) {
+        wallpapers.push({
+          id: i,
+          url: `https://cdn.shijinzhuang.com/jxtk/bz/${category.code}/${i}.jpg`
+        })
+      }
+      this.allWallpapers[category.name] = wallpapers
+    })
+  },
+  // 加载当前分类的壁纸
+  loadWallpapers() {
+    const currentCategoryName = this.categories[this.currentCategory]
+    const wallpapers = this.allWallpapers[currentCategoryName] || []
+    
+    // 转换为两列布局的行数据
+    const rows = []
+    for (let i = 0; i < wallpapers.length; i += 2) {
+      const row = [wallpapers[i]]
+      if (i + 1 < wallpapers.length) {
+        row.push(wallpapers[i + 1])
+      }
+      rows.push(row)
+    }
+    this.wallpaperRows = rows
   },
   switchCategory(index) {
-    this.currentCategory = index;
+    this.currentCategory = index
+    this.loadWallpapers()
   },
-  goToDetail() {
+  goToDetail(imageUrl) {
     router.push({
-      uri: '/PackageMain/pages/Detail'
+      uri: '/PackageMain/pages/Detail',
+      params: {
+        imageUrl: imageUrl
+      }
     })
   }
 }
@@ -124,10 +171,10 @@ export default {
   overflow: hidden;
 }
 
-.placeholder-img {
+.wallpaper-img {
   width: 100%;
   height: 100%;
-  background-color: #e0e0e0;
+  object-fit: cover;
 }
 
 .footer-spacer {

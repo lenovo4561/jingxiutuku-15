@@ -1,7 +1,7 @@
 <template>
   <div class="detail-page">
-    <!-- Wallpaper Placeholder -->
-    <div class="wallpaper-placeholder"></div>
+    <!-- Wallpaper Image -->
+    <image class="wallpaper-image" src="{{imageUrl}}"></image>
     
     <!-- Back Button -->
     <div class="back-btn" onclick="goBack">
@@ -9,7 +9,7 @@
     </div>
 
     <!-- Download Button -->
-    <div class="download-btn">
+    <div class="download-btn" onclick="downloadImage">
       <image src="/PackageMain/assets/img/xzbz.png" class="download-text"></image>
     </div>
   </div>
@@ -17,10 +17,63 @@
 
 <script>
 import router from '@system.router'
+import prompt from '@system.prompt'
+import request from '@system.request'
+import media from '@system.media'
 
 export default {
+  data: {
+    imageUrl: ''
+  },
+  onInit() {
+    this.imageUrl = this.imageUrl || ''
+  },
   goBack() {
     router.back()
+  },
+  downloadImage() {
+    const imageUrl = this.imageUrl
+    if (!imageUrl) {
+      prompt.showToast({ message: '图片地址为空' })
+      return
+    }
+
+    prompt.showToast({ message: '开始下载...' })
+
+    // 编码URL中的空格
+    const encodedUrl = imageUrl.replace(/\s/g, '%20')
+
+    request.download({
+      url: encodedUrl,
+      success: data => {
+        console.info('Download success:', data.token)
+        request.onDownloadComplete({
+          token: data.token,
+          success: ret => {
+            console.info('Download complete, path:', ret.uri)
+
+            media.saveToPhotosAlbum({
+              uri: ret.uri,
+              success: () => {
+                prompt.showToast({ message: '保存成功' })
+              },
+              fail: (data, code) => {
+                console.error('Save to album failed:', data, code)
+                prompt.showToast({ message: '保存失败，请检查权限' })
+              }
+            })
+          },
+          fail: (data, code) => {
+            console.error('Download complete check failed:', data, code)
+            prompt.showToast({ message: '下载失败' })
+          }
+        })
+      },
+      fail: (data, code) => {
+        console.error('Download request failed:', data, code)
+        prompt.showToast({ message: '下载请求失败' })
+      }
+    })
   }
 }
 </script>
@@ -33,10 +86,10 @@ export default {
   background-color: #000000;
 }
 
-.wallpaper-placeholder {
+.wallpaper-image {
   width: 100%;
   height: 100%;
-  background-color: #333333;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;

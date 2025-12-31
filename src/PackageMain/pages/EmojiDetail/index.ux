@@ -5,12 +5,12 @@
       <div class="back-btn" onclick="goBack">
         <image src="/PackageMain/assets/img/back.png" class="back-icon"></image>
       </div>
-      <text class="counter">1/20</text>
+      <text class="counter">{{currentIndex + 1}}/{{total}}</text>
     </div>
 
-    <!-- Main Content: Emoji Placeholder -->
+    <!-- Main Content: Emoji Image -->
     <div class="content-area">
-      <div class="emoji-placeholder"></div>
+      <image class="emoji-image" src="{{currentImageUrl}}"></image>
     </div>
 
     <!-- Navigation Controls -->
@@ -27,7 +27,7 @@
 
     <!-- Download Button -->
     <div class="footer-area">
-      <div class="download-btn">
+      <div class="download-btn" onclick="downloadImage">
         <image src="/PackageMain/assets/img/xzbqb.png" class="download-text"></image>
       </div>
     </div>
@@ -36,24 +36,86 @@
 
 <script>
 import router from '@system.router'
+import prompt from '@system.prompt'
+import request from '@system.request'
+import media from '@system.media'
 
 export default {
   data: {
-    currentIndex: 1,
-    total: 20
+    currentIndex: 0,
+    total: 40,
+    currentImageUrl: ''
+  },
+  onInit() {
+    // 确保 currentIndex 是数字类型
+    this.currentIndex = parseInt(this.currentIndex) || 0
+    console.log('Emoji detail init, currentIndex:', this.currentIndex)
+    this.total = 40
+    this.updateCurrentImage()
+  },
+  updateCurrentImage() {
+    // 直接根据索引生成 URL，索引从0开始，图片编号从1开始
+    const imageIndex = this.currentIndex + 1
+    this.currentImageUrl = `https://cdn.shijinzhuang.com/jxtk/bqb/${imageIndex}.jpg`
+    console.log('Current index:', this.currentIndex, 'Image URL:', this.currentImageUrl)
   },
   goBack() {
     router.back()
   },
   prevImage() {
-    if (this.currentIndex > 1) {
+    if (this.currentIndex > 0) {
       this.currentIndex--
+      this.updateCurrentImage()
     }
   },
   nextImage() {
-    if (this.currentIndex < this.total) {
+    if (this.currentIndex < this.total - 1) {
       this.currentIndex++
+      this.updateCurrentImage()
     }
+  },
+  downloadImage() {
+    const imageUrl = this.currentImageUrl
+    if (!imageUrl) {
+      prompt.showToast({ message: '图片地址为空' })
+      return
+    }
+
+    prompt.showToast({ message: '开始下载...' })
+
+    const encodedUrl = imageUrl.replace(/\s/g, '%20')
+
+    request.download({
+      url: encodedUrl,
+      success: data => {
+        console.info('Download success:', data.token)
+        request.onDownloadComplete({
+          token: data.token,
+          success: ret => {
+            console.info('Download complete, path:', ret.uri)
+
+            media.saveToPhotosAlbum({
+              uri: ret.uri,
+              success: () => {
+                prompt.showToast({ message: '保存成功' })
+              },
+              fail: (data, code) => {
+                console.error('Save to album failed:', data, code)
+                prompt.showToast({ message: '保存失败，请检查权限' })
+              }
+            })
+          },
+          fail: (data, code) => {
+            console.error('Download complete check failed:', data, code)
+            prompt.showToast({ message: '下载失败' })
+          }
+        })
+      },
+      fail: (data, code) => {
+        console.error('Download request failed:', data, code)
+        prompt.showToast({ message: '下载请求失败' })
+      }
+    })
   }
 }
 </script>
@@ -106,10 +168,10 @@ export default {
   padding: 9px;
 }
 
-.emoji-placeholder {
+.emoji-image {
   width: 100%;
-  height: 185px; /* Adjust height as needed */
-  background-color: #f0f0f0;
+  height: 185px;
+  object-fit: contain;
   border-radius: 5px;
 }
 

@@ -29,6 +29,12 @@
     },
     {
       "name": "system.webview"
+    },
+    {
+      "name": "system.request"
+    },
+    {
+      "name": "system.media"
     }
   ],
   "permissions": [
