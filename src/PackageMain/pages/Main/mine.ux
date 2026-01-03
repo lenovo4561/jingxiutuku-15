@@ -1,7 +1,10 @@
 <template>
   <div class="page-wrapper">
     <stack class="header">
-      <image class="header-bg" src="/PackageMain/assets/img/shouye-banner-1.png"></image>
+      <image
+        class="header-bg"
+        src="/PackageMain/assets/img/shouye-banner-1.png"
+      ></image>
       <div class="user-info">
         <image class="avatar" src="/PackageMain/assets/img/Ellipse.png"></image>
         <text class="username">吴萱萱</text>
@@ -10,20 +13,32 @@
 
     <div class="card">
       <text class="card-title">其他服务</text>
-      
-      <div class="list-item" onclick="openUrl('https://api.51dsp.cn/index/agreement.do?pn=com.jinxiutkjsjx.brocadetk')">
+
+      <div
+        class="list-item"
+        onclick="openUrl('https://api.51dsp.cn/index/agreement.do?pn=com.jinxiutkjsjx.brocadetk')"
+      >
         <div class="item-left">
-          <image class="item-icon" src="/PackageMain/assets/img/yonghuxieyi.png"></image>
+          <image
+            class="item-icon"
+            src="/PackageMain/assets/img/yonghuxieyi.png"
+          ></image>
           <text class="item-text">用户协议</text>
         </div>
         <image class="arrow" src="/PackageMain/assets/img/jiantou.png"></image>
       </div>
-      
+
       <div class="divider"></div>
-      
-      <div class="list-item" onclick="openUrl('https://api.51dsp.cn/index/privacy.do?pn=com.jinxiutkjsjx.brocadetk')">
+
+      <div
+        class="list-item"
+        onclick="openUrl('https://api.51dsp.cn/index/privacy.do?pn=com.jinxiutkjsjx.brocadetk')"
+      >
         <div class="item-left">
-          <image class="item-icon" src="/PackageMain/assets/img/yinsizhengce.png"></image>
+          <image
+            class="item-icon"
+            src="/PackageMain/assets/img/yinsizhengce.png"
+          ></image>
           <text class="item-text">隐私政策</text>
         </div>
         <image class="arrow" src="/PackageMain/assets/img/jiantou.png"></image>
@@ -78,13 +93,13 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 12px;
+  padding-top: 23px;
 }
 
 .avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 21px;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
   margin-bottom: 5px;
 }
 
@@ -105,7 +120,7 @@ export default {
 }
 
 .card-title {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: bold;
   color: #000000;
   margin-bottom: 9px;
@@ -124,20 +139,20 @@ export default {
 }
 
 .item-icon {
-  width: 12px;
-  height: 12px;
+  width: 18px;
+  height: 18px;
   margin-right: 7px;
   object-fit: contain;
 }
 
 .item-text {
-  font-size: 7px;
+  font-size: 9px;
   color: #333333;
 }
 
 .arrow {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
 }
 

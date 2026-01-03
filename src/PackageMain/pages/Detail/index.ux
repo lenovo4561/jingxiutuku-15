@@ -2,7 +2,7 @@
   <div class="detail-page">
     <!-- Wallpaper Image -->
     <image class="wallpaper-image" src="{{imageUrl}}"></image>
-    
+
     <!-- Back Button -->
     <div class="back-btn" onclick="goBack">
       <image src="/PackageMain/assets/img/back.png" class="back-icon"></image>
@@ -10,7 +10,10 @@
 
     <!-- Download Button -->
     <div class="download-btn" onclick="downloadImage">
-      <image src="/PackageMain/assets/img/xzbz.png" class="download-text"></image>
+      <image
+        src="/PackageMain/assets/img/xzbz.png"
+        class="download-text"
+      ></image>
     </div>
   </div>
 </template>
@@ -99,17 +102,17 @@ export default {
   position: absolute;
   top: 19px;
   left: 9px;
-  width: 19px;
-  height: 19px;
+  width: 28px;
+  height: 28px;
   background-color: #ffffff;
-  border-radius: 9px;
+  border-radius: 14px;
   justify-content: center;
   align-items: center;
 }
 
 .back-icon {
-  width: 9px;
-  height: 9px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
@@ -119,7 +122,7 @@ export default {
   left: 9px;
   right: 9px;
   height: 28px;
-  background: linear-gradient(to right, #7F5EFF, #E066FF);
+  background: linear-gradient(to right, #7f5eff, #e066ff);
   border-radius: 14px;
   justify-content: center;
   align-items: center;

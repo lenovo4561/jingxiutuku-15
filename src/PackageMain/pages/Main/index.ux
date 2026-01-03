@@ -202,8 +202,8 @@ export default {
   height: 100%;
 }
 .tab-icon {
-  width: 13px;
-  height: 13px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   margin-bottom: 2px;
 }
